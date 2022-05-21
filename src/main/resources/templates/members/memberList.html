@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th ="http://www.thtmeleaf.org"></html>
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>loginId</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${members}">
+                <td th:text="${member.id}"></td>
+                <td th:text="${member.loginId}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
