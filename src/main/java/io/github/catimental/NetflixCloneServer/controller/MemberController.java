@@ -5,8 +5,10 @@ import io.github.catimental.NetflixCloneServer.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MemberController {
@@ -25,7 +27,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(MemberForm form) {
+    public String create(RegistrationMemberForm form) {
         var member = new Member();
         member.setLoginId(form.getLoginId());
         member.setLoginPassword(form.getLoginPassword());
@@ -33,6 +35,24 @@ public class MemberController {
 
         return "redirect:/";
     }
+
+    @PostMapping("/members/regist")
+    public String register(RegistrationMemberForm form) {
+        return create(form);
+    }
+
+    @PostMapping("/members/login")
+    @ResponseBody
+    @CrossOrigin(origins="*", allowedHeaders = "*")
+    public String login(LoginMemberForm form) {//todo refartoring
+        final var optionalMember =  memberService.login(form.getLoginId(), form.getLoginPassword());
+        if(optionalMember.isPresent()) {
+            return optionalMember.get().getLoginId();
+        }
+
+        return "";
+    }
+
 
     @GetMapping("/members")
     public String list(Model model) {

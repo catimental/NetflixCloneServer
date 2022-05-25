@@ -1,6 +1,6 @@
 package io.github.catimental.NetflixCloneServer.controller;
 
-public class MemberForm {
+public class RegistrationMemberForm {
     private String loginId;
     private String loginPassword;
 
@@ -18,5 +18,13 @@ public class MemberForm {
 
     public void setLoginId(String loginId) {
         this.loginId = loginId;
+    }
+
+    @Override
+    public String toString() {
+        return "RegistrationMemberForm{" +
+                "loginId='" + loginId + '\'' +
+                ", loginPassword='" + loginPassword + '\'' +
+                '}';
     }
 }

@@ -24,6 +24,22 @@ public class MemberService {
         return member.getId();
     }
 
+    /**
+     * 로그인
+     */
+    public Optional<Member> login(String loginId, String loginPassword) {
+        if(isValidLoginData(loginId, loginPassword)) {
+            return memberRepository.findByLoginId(loginId);
+        }
+        return Optional.empty();
+    }
+
+    public boolean isValidLoginData(String loginId, String loginPassword) {
+        return memberRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다"))
+                .getLoginPassword().equals(loginPassword);
+    }
+
     private void validateDuplicateMember(Member member) {
         memberRepository.findByLoginId(member.getLoginId())
                         .ifPresent(member1 -> {
