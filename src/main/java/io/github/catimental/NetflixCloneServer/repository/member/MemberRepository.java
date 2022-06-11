@@ -1,4 +1,4 @@
-package io.github.catimental.NetflixCloneServer.repository;
+package io.github.catimental.NetflixCloneServer.repository.member;
 
 import io.github.catimental.NetflixCloneServer.domain.Member;
 

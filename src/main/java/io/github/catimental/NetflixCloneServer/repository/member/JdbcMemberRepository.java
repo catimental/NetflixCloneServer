@@ -1,4 +1,4 @@
-package io.github.catimental.NetflixCloneServer.repository;
+package io.github.catimental.NetflixCloneServer.repository.member;
 
 import io.github.catimental.NetflixCloneServer.domain.Member;
 
@@ -48,7 +48,7 @@ public class JdbcMemberRepository implements MemberRepository{
         Member member = null;
         try (Connection connection = dataSource.getConnection();
              final var ps = connection.prepareStatement(sql);
-         ) {
+         ) { //autoclosable Pattern
             ps.setLong(1, id);
 
             try (var rs = ps.executeQuery()) {

@@ -1,6 +1,8 @@
 package io.github.catimental.NetflixCloneServer.controller;
 
 import io.github.catimental.NetflixCloneServer.domain.Member;
+import io.github.catimental.NetflixCloneServer.dto.LoginMemberForm;
+import io.github.catimental.NetflixCloneServer.dto.RegistrationMemberForm;
 import io.github.catimental.NetflixCloneServer.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,7 +49,7 @@ public class MemberController {
     public String login(LoginMemberForm form) {//todo refartoring
         final var optionalMember =  memberService.login(form.getLoginId(), form.getLoginPassword());
         if(optionalMember.isPresent()) {
-            return optionalMember.get().getLoginId();
+            return String.valueOf(optionalMember.get().getId());
         }
 
         return "";

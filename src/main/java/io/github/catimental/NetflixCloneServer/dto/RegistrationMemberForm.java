@@ -1,4 +1,4 @@
-package io.github.catimental.NetflixCloneServer.controller;
+package io.github.catimental.NetflixCloneServer.dto;
 
 public class RegistrationMemberForm {
     private String loginId;

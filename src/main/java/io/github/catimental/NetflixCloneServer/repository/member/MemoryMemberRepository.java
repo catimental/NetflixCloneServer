@@ -1,7 +1,6 @@
-package io.github.catimental.NetflixCloneServer.repository;
+package io.github.catimental.NetflixCloneServer.repository.member;
 
 import io.github.catimental.NetflixCloneServer.domain.Member;
-import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;

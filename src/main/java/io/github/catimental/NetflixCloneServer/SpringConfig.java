@@ -1,33 +1,40 @@
 package io.github.catimental.NetflixCloneServer;
 
-import io.github.catimental.NetflixCloneServer.repository.JdbcMemberRepository;
-import io.github.catimental.NetflixCloneServer.repository.MemberRepository;
-import io.github.catimental.NetflixCloneServer.repository.MemoryMemberRepository;
+import io.github.catimental.NetflixCloneServer.repository.member.MemberRepository;
+import io.github.catimental.NetflixCloneServer.repository.movie.LikeMovieRepository;
+import io.github.catimental.NetflixCloneServer.service.LikeMovieService;
 import io.github.catimental.NetflixCloneServer.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
-
 @Configuration
 public class SpringConfig {
 
-    private DataSource dataSource;
-
+    private final MemberRepository memberRepository;
+    private final LikeMovieRepository likeMovieRepository;
     @Autowired
-    public SpringConfig(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public SpringConfig(MemberRepository memberRepository, LikeMovieRepository likeMovieRepository) {
+        this.memberRepository = memberRepository;
+        this.likeMovieRepository = likeMovieRepository;
     }
-
 
     @Bean
     public MemberService memberService() {
-        return new MemberService(memberRepository());
+        return new MemberService(memberRepository);
     }
 
     @Bean
-    public MemberRepository memberRepository() {
-        return new JdbcMemberRepository(dataSource);
+    public LikeMovieService likeMovieService() {
+        return new LikeMovieService(likeMovieRepository);
     }
+
+//    @Bean
+//    public MemberRepository memberRepository() {
+////        return new JdbcMemberRepository(dataSource);
+////        return new JdbcTemplateMemberRepository(dataSource);
+////        return new JpaMemberRepository(em);
+////        return
+//    }
+
 }

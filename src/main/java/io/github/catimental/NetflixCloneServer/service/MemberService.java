@@ -1,13 +1,13 @@
 package io.github.catimental.NetflixCloneServer.service;
 
 import io.github.catimental.NetflixCloneServer.domain.Member;
-import io.github.catimental.NetflixCloneServer.repository.MemberRepository;
-import io.github.catimental.NetflixCloneServer.repository.MemoryMemberRepository;
-import org.springframework.stereotype.Service;
+import io.github.catimental.NetflixCloneServer.repository.member.MemberRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 

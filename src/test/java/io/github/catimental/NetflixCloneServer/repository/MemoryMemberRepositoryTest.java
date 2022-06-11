@@ -2,7 +2,7 @@ package io.github.catimental.NetflixCloneServer.repository;
 
 
 import io.github.catimental.NetflixCloneServer.domain.Member;
-import org.assertj.core.api.Assertions;
+import io.github.catimental.NetflixCloneServer.repository.member.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

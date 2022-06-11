@@ -1,6 +1,7 @@
 package io.github.catimental.NetflixCloneServer.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.core.io.*;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 public class MovieController {
 
+    private static final String SAMPLE_MOVIE_NAME = "sample";
     @GetMapping(value = "/video/{name}")
     public ResponseEntity<ResourceRegion> getVideo (@RequestHeader HttpHeaders headers, @PathVariable String name) throws IOException {
         var video = new UrlResource("classpath:movies/"+name+".mp4");
@@ -49,9 +51,10 @@ public class MovieController {
 
     @GetMapping("/region/{fileName}")
     public ResponseEntity<ResourceRegion> videoRegion(@PathVariable String fileName, @RequestHeader HttpHeaders headers) throws IOException {
+        System.out.println(headers.keySet());
         var resource = new ClassPathResource("movies/%s.mp4".formatted(fileName));
         if(!resource.exists()) {
-            resource = new ClassPathResource("movies/sample.mp4");
+            resource = new ClassPathResource("movies/%s.mp4".formatted(SAMPLE_MOVIE_NAME));
         }
 
         final long chunkSize = 1024 * 1024 * 1;
@@ -70,7 +73,7 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).cacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES))
                 .contentType(MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM))
                 .header("Accept-Ranges", "bytes")
-                .eTag(fileName) // IE 부분 호출을 위해서 설정
+                .eTag(fileName)
                 .body(region);
     }
 }
