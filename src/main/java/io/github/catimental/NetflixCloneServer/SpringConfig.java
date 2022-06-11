@@ -7,6 +7,7 @@ import io.github.catimental.NetflixCloneServer.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @Configuration
 public class SpringConfig {
@@ -29,12 +30,6 @@ public class SpringConfig {
         return new LikeMovieService(likeMovieRepository);
     }
 
-//    @Bean
-//    public MemberRepository memberRepository() {
-////        return new JdbcMemberRepository(dataSource);
-////        return new JdbcTemplateMemberRepository(dataSource);
-////        return new JpaMemberRepository(em);
-////        return
-//    }
+
 
 }

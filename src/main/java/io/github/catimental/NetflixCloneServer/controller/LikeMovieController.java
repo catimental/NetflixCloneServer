@@ -1,5 +1,8 @@
 package io.github.catimental.NetflixCloneServer.controller;
 
+import io.github.catimental.NetflixCloneServer.domain.LikeMovie;
+import io.github.catimental.NetflixCloneServer.domain.LikeMovieId;
+import io.github.catimental.NetflixCloneServer.dto.LikeDTO;
 import io.github.catimental.NetflixCloneServer.service.LikeMovieService;
 import io.github.catimental.NetflixCloneServer.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -26,22 +29,35 @@ public class LikeMovieController {
 
     @PostMapping("/likes")
     @ResponseBody
-    public List<Integer> getLikeMovies(@RequestHeader HttpHeaders headers) throws IOException {
+    public List<Long> getLikeMovies(@RequestHeader HttpHeaders headers) throws IOException {
         final var token = headers.get("Authorization").get(0);
         var likes = likeMovieService.getLikeMovies(Long.valueOf(token));
-        likes.forEach(System.out::println);
-        return List.of(1, 2);
+        return likes;
     }
 
     @PostMapping("/like")
-    public void addLikeMovie() {
+    public void addLikeMovie(@RequestHeader HttpHeaders headers, LikeDTO likeDTO) {
+        final var token = Long.parseLong(headers.get("Authorization").get(0));
+        var likeMovie = new LikeMovie();
+        likeMovie.setLikeMovieId(new LikeMovieId(token, likeDTO.getMovieId()));
+        likeMovieService.addLikeMovie(likeMovie);
 
     }
 
+    @DeleteMapping("/like/{id}")
+    public void removeLikeMovie(@RequestHeader HttpHeaders headers, @PathVariable long id){
+        final var token = Long.parseLong(headers.get("Authorization").get(0));
+        var likeMovie = new LikeMovie();
+        likeMovie.setLikeMovieId(new LikeMovieId(token, id));
+        likeMovieService.removeLikeMovie(likeMovie);
+    }
 
-    @GetMapping("/likes/{id}")
+
+    @GetMapping("/like/{id}")
     @ResponseBody
-    boolean isLikeMovie(@RequestHeader HttpHeaders headers, HttpServletRequest request, @PathVariable String id) {
-        return false;
+    boolean isLikeMovie(@RequestHeader HttpHeaders headers, @PathVariable long id) {
+        final var token = Long.parseLong(headers.get("Authorization").get(0));
+        var liked = likeMovieService.isLiked(new LikeMovieId(token, id));
+        return liked;
     }
 }

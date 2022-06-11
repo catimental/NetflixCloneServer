@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MemberController {
     private final MemberService memberService;
 
@@ -45,7 +46,7 @@ public class MemberController {
 
     @PostMapping("/members/login")
     @ResponseBody
-    @CrossOrigin(origins="*", allowedHeaders = "*")
+
     public String login(LoginMemberForm form) {//todo refartoring
         final var optionalMember =  memberService.login(form.getLoginId(), form.getLoginPassword());
         if(optionalMember.isPresent()) {

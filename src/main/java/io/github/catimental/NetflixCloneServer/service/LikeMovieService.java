@@ -1,5 +1,6 @@
 package io.github.catimental.NetflixCloneServer.service;
 import io.github.catimental.NetflixCloneServer.domain.LikeMovie;
+import io.github.catimental.NetflixCloneServer.domain.LikeMovieId;
 import io.github.catimental.NetflixCloneServer.repository.member.MemberRepository;
 import io.github.catimental.NetflixCloneServer.repository.movie.LikeMovieRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,10 @@ public class LikeMovieService {
 
     public void removeLikeMovie(LikeMovie likeMovie) {
         likeMovieRepository.delete(likeMovie);
+    }
+
+    public boolean isLiked(LikeMovieId id) {
+        return likeMovieRepository.findById(id).isPresent();
     }
 
 }
