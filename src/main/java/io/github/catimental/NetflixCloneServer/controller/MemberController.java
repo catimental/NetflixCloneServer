@@ -39,7 +39,7 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @PostMapping("/members/regist")
+    @PostMapping("/members/register")
     public String register(RegistrationMemberForm form) {
         return create(form);
     }
