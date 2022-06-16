@@ -30,16 +30,18 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
+    @ResponseBody
     public String create(RegistrationMemberForm form) {
         var member = new Member();
         member.setLoginId(form.getLoginId());
         member.setLoginPassword(form.getLoginPassword());
         memberService.register(member);
 
-        return "redirect:/";
+        return String.valueOf(member.getId());
     }
 
     @PostMapping("/members/register")
+    @ResponseBody
     public String register(RegistrationMemberForm form) {
         return create(form);
     }
